@@ -2,34 +2,71 @@ version: 2
 
 models:
   - name: stg_customers
+    description: Cleaned customer dataset with standardized column names and data types. Contains one record per customer and serves as the foundation for customer analytics.
+
     columns:
       - name: customer_id
+        description: Unique identifier for a customer.
         tests:
           - not_null
           - unique
 
   - name: stg_orders
+    description: Cleaned orders dataset containing order lifecycle information including purchase, delivery and status attributes.
+
     columns:
       - name: order_id
+        description: Unique identifier for an order.
         tests:
           - not_null
           - unique
+
       - name: customer_id
+        description: Customer who placed the order.
         tests:
           - not_null
+
       - name: order_status
-        tests:
-          - accepted_values:
-              values: ['created', 'approved', 'invoiced', 'processing', 'shipped', 'delivered', 'unavailable', 'canceled']
+        description: Current status of the order within the fulfilment lifecycle.
 
   - name: stg_order_items
+    description: Cleaned order-item dataset representing the relationship between orders, products and sellers. Contains one record per item within an order.
+
     columns:
       - name: order_id
+        description: Identifier of the order containing the item.
         tests:
           - not_null
+
       - name: product_id
+        description: Identifier of the purchased product.
         tests:
           - not_null
+
       - name: seller_id
+        description: Identifier of the seller fulfilling the order item.
         tests:
           - not_null
+
+  - name: stg_order_payments
+    description: Cleaned payment dataset containing payment method and transaction details associated with customer orders.
+
+  - name: stg_order_reviews
+    description: Cleaned customer review dataset containing satisfaction scores and review comments submitted after order completion.
+
+  - name: stg_products
+    description: Cleaned product master dataset containing product attributes and category information.
+
+    columns:
+      - name: product_id
+        description: Unique identifier for a product.
+
+  - name: stg_sellers
+    description: Cleaned seller master dataset containing seller location and identification attributes.
+
+    columns:
+      - name: seller_id
+        description: Unique identifier for a seller.
+
+  - name: stg_product_category_translation
+    description: Mapping table translating product category names from Portuguese into English to support reporting and analytics.

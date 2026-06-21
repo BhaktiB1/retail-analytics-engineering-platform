@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: int_order_items_enriched
+    description: Enriched order-item dataset created by joining orders, customers, products and category information. Contains calculated delivery metrics and business-ready attributes used by downstream fact tables.
+
+    columns:
+      - name: order_id
+        description: Unique identifier of the order.
+
+      - name: customer_id
+        description: Customer associated with the order.
+
+      - name: product_id
+        description: Product purchased in the order.
+
+      - name: seller_id
+        description: Seller responsible for fulfilling the order.
+
+      - name: gross_item_value
+        description: Total item value calculated as product price plus freight cost.
+
+      - name: actual_delivery_days
+        description: Number of days between purchase and delivery.
+
+      - name: estimated_delivery_days
+        description: Expected delivery duration based on estimated delivery date.
+
+      - name: is_late_delivery
+        description: Indicator showing whether the order was delivered later than the estimated delivery date.
+
+      - name: delivery_status
+        description: Categorisation of delivery performance generated using the calculate_delivery_status macro.

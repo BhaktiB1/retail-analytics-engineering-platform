@@ -2,27 +2,59 @@ version: 2
 
 models:
   - name: dim_customers
-    description: Customer dimension containing one row per customer.
+    description: Customer dimension containing one record per customer. Used to support customer segmentation, retention analysis and reporting.
+
     columns:
       - name: customer_id
+        description: Unique identifier for a customer.
         tests:
           - not_null
           - unique
 
   - name: dim_products
-    description: Product dimension enriched with translated category names.
+    description: Product dimension enriched with translated category names and product attributes. Used for product performance and category analysis.
+
     columns:
       - name: product_id
+        description: Unique identifier for a product.
         tests:
           - not_null
           - unique
 
+      - name: product_category_name
+        description: Original Portuguese product category.
+
+      - name: product_category_name_english
+        description: English translation of the product category.
+
   - name: fct_order_items
-    description: Order-item fact table containing revenue, freight, delivery and product metrics.
+    description: Fact table at the order-item grain containing revenue, freight, delivery performance and product metrics used for operational and financial reporting.
+
     columns:
       - name: order_id
+        description: Unique identifier for an order.
         tests:
           - not_null
+
       - name: gross_item_value
+        description: Total item value including product price and freight cost.
         tests:
           - not_null
+
+      - name: actual_delivery_days
+        description: Actual delivery duration measured in days.
+
+      - name: estimated_delivery_days
+        description: Expected delivery duration measured in days.
+
+      - name: is_late_delivery
+        description: Indicator showing whether delivery occurred after the promised delivery date.
+
+  - name: fct_order_items_incremental
+    description: Incremental version of the order-item fact table designed to process only new records and improve pipeline performance on large datasets.
+
+  - name: fct_orders_incremental
+    description: Incremental order-level fact table used to demonstrate scalable dbt incremental loading patterns.
+
+  - name: rpt_monthly_revenue
+    description: Monthly reporting model summarising revenue trends over time. Designed for BI dashboards, executive reporting and business performance monitoring.

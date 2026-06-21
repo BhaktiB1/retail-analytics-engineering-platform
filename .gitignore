@@ -1,18 +1,26 @@
-# dbt
-target/
-logs/
-dbt_packages/
-
-# Snowflake credentials
-profiles.yml
-
 # Python
 __pycache__/
 *.pyc
+.venv/
+venv/
 
-# Environment
+# dbt
+target/
+dbt_packages/
+logs/
+profiles.yml
+
+# Environment / secrets
 .env
-.venv
+*.key
 
-# Data files
+# Data
+data/raw/
 *.csv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
