@@ -4,9 +4,18 @@ sources:
   - name: raw
     database: RETAIL_ANALYTICS
     schema: PUBLIC
+    config:
+      freshness:
+        warn_after:
+          count: 7
+          period: day
+        error_after:
+          count: 30
+          period: day
     tables:
       - name: customers
       - name: orders
+        loaded_at_field: order_purchase_timestamp
       - name: order_items
       - name: order_payments
       - name: order_reviews
