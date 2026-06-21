@@ -29,9 +29,13 @@ select
         o.order_estimated_delivery_date
     ) as estimated_delivery_days,
 
+    {{ calculate_delivery_status(
+        'o.order_delivered_customer_date',
+        'o.order_estimated_delivery_date'
+    ) }} as delivery_status,
+
     case
-        when o.order_delivered_customer_date > o.order_estimated_delivery_date
-            then 1
+        when o.order_delivered_customer_date > o.order_estimated_delivery_date then 1
         else 0
     end as is_late_delivery
 

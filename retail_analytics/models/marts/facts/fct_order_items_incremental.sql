@@ -1,0 +1,34 @@
+{{ config(
+    materialized='incremental',
+    unique_key=['order_id', 'order_item_id']
+) }}
+
+select
+    order_id,
+    order_item_id,
+    product_id,
+    seller_id,
+    customer_id,
+    order_status,
+    order_purchase_timestamp,
+    order_delivered_customer_date,
+    order_estimated_delivery_date,
+    product_category_name,
+    product_category_name_english,
+    price,
+    freight_value,
+    gross_item_value,
+    actual_delivery_days,
+    estimated_delivery_days,
+    is_late_delivery
+
+from {{ ref('int_order_items_enriched') }}
+
+{% if is_incremental() %}
+
+where order_purchase_timestamp > (
+    select coalesce(max(order_purchase_timestamp), '1900-01-01')
+    from {{ this }}
+)
+
+{% endif %}
