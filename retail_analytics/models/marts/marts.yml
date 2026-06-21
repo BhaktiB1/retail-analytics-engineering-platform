@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: Customer dimension containing one row per customer.
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_products
+    description: Product dimension enriched with translated category names.
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+
+  - name: fct_order_items
+    description: Order-item fact table containing revenue, freight, delivery and product metrics.
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: gross_item_value
+        tests:
+          - not_null
